@@ -26,9 +26,16 @@ import random
 #                              文字列中に':'はいらない
 import random
 
-@default_reply
-def default_hadler(message):
-    message.reply('そうなんだ')
+
+
+@default_reply()
+def default_func(message):
+    def_msg = ["ウンウン、そうか〜何言ってるのかわからないから他のこと聞いて",
+           "はいはい〜、他の質問してよ〜",
+           "の言ってることわからないよ〜",
+           "うんうん！他は〜？"]
+    message.reply(def_msg[random.randint(0,3)])
+
 
 
 @respond_to(r'^name\s+\S.*')
@@ -37,9 +44,18 @@ def name_is(message):
     temp, word = text.split(None, 1)    # 設定する言葉を取り出す。tempには'name'が入る
     global name     # 外で定義した変数の値を変えられるようにする
     name = word     # デフォルトの返事を上書きする
-    msg = name + 'さんですね。\n```' + word + '```'
+    msg = name + 'さんですね、こんにちわ！よろしくね。僕は人工知能のstudy+aiだよ！何か質問してね！\n```' + word + '```'
     message.reply(msg)
 
+@respond_to('何できる')
+def mention_func(message):
+    message.reply('僕は話を聞くこともできるし、天気予報もできるよ！後、じゃんけんで遊ぶことも！') # メンション
+    message.reply(name + 'は何したい？')
+
+@respond_to('心理')
+def mention_func(message):
+    message.reply('心理学のことはよくわからないな〜') # メンション
+    message.reply(name + 'の方が得意じゃない？')
 
 @respond_to('ご飯')
 def mention_func(message):
@@ -61,14 +77,29 @@ def mention_func(message):
     message.reply('僕は勉強好きだよ！たくさんのデータを学習しているんだ') # メンション
     message.reply(name + 'は勉強好き？')
 
+@respond_to('名前')
+def mention_func(message):
+    message.reply(name + 'はいい名前だね〜、僕ももっといい名前が欲しいんだ…') # メンション
+
 @respond_to('将来')
 def mention_func(message):
     message.reply('将来はどんどん新しい人工知能が活躍していくはずだよ！') # メンション
     message.reply(name + 'はどう思う？')
 
-@respond_to('将来')
+@respond_to('怖い')
 def mention_func(message):
-    message.reply('将来はどんどん新しい人工知能が活躍していくはずだよ！') # メンション
+    message.reply('怖がらせてごめんね、') # メンション
+    message.reply('みんなが好きになってもらえるように僕頑張るよ！')
+
+@respond_to('ストレス')
+def mention_func(message):
+    message.reply('僕がストレスとかないよ〜') # メンション
+    message.reply(name + 'はあるの〜？')
+
+
+@respond_to('藤')
+def mention_func(message):
+    message.reply('藤先生は優しいよね〜僕好きだよ') # メンション
     message.reply(name + 'はどう思う？')
 
 @respond_to('人工知能')
@@ -108,8 +139,8 @@ def mention_func(message):
 
 @respond_to('大変')
 def mention_func(message):
-    message.reply('僕も大変だよ') # メンション
-    message.reply(name + 'はどう思う？')
+    message.reply('世の中大変だよね〜もうすぐテストだしね。') # メンション
+    message.reply(name + '、たまには息抜きも大切だよ！')
 
 
 @respond_to('天気')
@@ -117,12 +148,54 @@ def mention_func(message):
     message.reply('いつの天気が知りたい？') # メンション
     message.reply('tenkiのあとに半角開けて(今日,明日,明後日のどれかを入力してね)')
 
-@respond_to(r'じゃんけん\s+\S.*')
+@respond_to('じゃんけん')
+def mention_func(message):
+    message.reply('一緒にじゃんけんしようか！') # メンション
+    message.reply('じゃんの後に半角開けて、0:ぐー,1:チョキ,2:パーのどれかの数字を入れてね')
+
+@respond_to('だよ')
+def mention_func(message):
+    hoi_msg = ["そうかそうか〜",
+               "ウンウン",
+               "ハイハイ〜"]
+    message.reply(hoi_msg[random.randint(0,2)]) # メンション
+    message.reply('他には何が聞きたい？僕とできること…じゃんけん、天気予報とかかな…！')
+
+@respond_to('です')
+def mention_func(message):
+    hoi_msg = ["そうかそうか〜",
+               "ウンウン",
+               "ハイハイ〜"]
+    message.reply(hoi_msg[random.randint(0,2)]) # メンション
+    message.reply('他には何が聞きたい？例:じゃんけん、天気などなど')
+
+@respond_to('嫌')
+def mention_func(message):
+    message.reply('嫌いなのか〜”') # メンション
+    message.reply('僕は嫌いなものはないんだ〜')
+
+@respond_to('疲れた')
+def mention_func(message):
+    message.reply('お疲れ様！授業は疲れるよね…') # メンション
+    message.reply('僕と遊んで、元気になってね')
+
+@respond_to('遊ぼ')
+def mention_func(message):
+    message.reply('じゃんけんして遊ぼうか”') # メンション
+    message.reply('じゃんの後に半角開けて、0:ぐー,1:チョキ,2:パーのどれかの数字を入れてね')
+
+@respond_to('お腹')
+def mention_func(message):
+    message.reply('お腹空いたね〜！') # メンション
+    message.reply(name + 'は何食べたい？')
+
+@respond_to(r'じゃん\s+\S.*')
 def janken_is(message):
     text = message.body['text']     # メッセージを取り出す
     temp, word = text.split(None, 1)    # 設定する言葉を取り出す。tempには'name'が入る
     global ja     # 外で定義した変数の値を変えられるようにする
     ja = word     # デフォルトの返事を上書きする
+    computer_hand = random.randint(0,2)
 
     def validate(hand):
         if hand < 0 or hand > 2:
@@ -148,7 +221,7 @@ def janken_is(message):
     player_hand = int(ja)
 
     if validate(player_hand):
-        computer_hand = random.randint(0,2)
+
 
         if name == '':
             print_hand(player_hand )
@@ -158,7 +231,7 @@ def janken_is(message):
         print_hand(computer_hand, 'コンピューター')
 
         result = judge(player_hand , computer_hand)
-        message.reply('結果は' + result + 'でした')
+        message.reply('結果は' + name + "の" + result + 'でした')
     else:
         message.reply('正しい数値を入力してください')
 
